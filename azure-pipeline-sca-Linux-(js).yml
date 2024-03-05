@@ -3,7 +3,7 @@
 #$(Build.SourcesDirectory) will take the entire source code of this repo
 
 trigger:
-- main
+- master
 
 pool:
   vmImage: ubuntu-latest
