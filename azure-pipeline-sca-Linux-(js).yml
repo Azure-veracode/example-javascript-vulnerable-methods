@@ -3,6 +3,7 @@
 #$(Build.SourcesDirectory) will take the entire source code of this repo
 # java -jar pipeline-scan.jar -vid $(VERACODE_API_ID) -vkey $(VERACODE_API_KEY) -f '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-js.zip' || true
 # --fail_on_severity="Very High, High"
+# curl -sSL https://download.sourceclear.com/ci.sh | bash -s -- scan --update-advisor
 
 trigger:
 - master
@@ -18,7 +19,7 @@ steps:
     targetType: 'inline'
     script: |
           export SRCCLR_API_TOKEN=$(SRCCLR)
-          curl -sSL https://download.sourceclear.com/ci.sh | bash -s -- scan --update-advisor
+          curl -sSL https://download.sourceclear.com/ci.sh | bash -s -- scan
 
 - task: ArchiveFiles@2
   inputs:
