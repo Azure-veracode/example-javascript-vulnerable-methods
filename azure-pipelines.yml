@@ -1,8 +1,8 @@
-trigger:
-- master
+# trigger:
+# - master
 
 schedules:
-  - cron: "25 12 * * *"  # Runs daily at 12:00 PM UTC
+  - cron: "32 12 * * *"  # Runs daily at 12:00 PM UTC
     displayName: "Daily Scheduled Build"
     branches:
       include:
