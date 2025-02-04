@@ -5,8 +5,8 @@
 # --fail_on_severity="Very High, High"
 # curl -sSL https://download.sourceclear.com/ci.sh | bash -s -- scan --update-advisor
 
-trigger:
-- master
+# trigger:
+# - master
 
 pool:
   vmImage: ubuntu-latest

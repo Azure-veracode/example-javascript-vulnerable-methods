@@ -1,0 +1,15 @@
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+
+- task: Bash@3
+  displayName: 'Veracode SCA scan'
+  inputs:
+    targetType: 'inline'
+    script: |
+          export SRCCLR_API_TOKEN=$(SRCCLR)
+          curl -sSL https://download.sourceclear.com/ci.sh | bash -s -- scan
