@@ -41,6 +41,6 @@ steps:
       for file in verascan/*; do
         if [ -f "$file" ]; then
           echo "Scanning $file ..."
-          ./veracode static scan "$file" --policy-file <name of the policy to use (replace any spaces with underscores)>.json
+          ./veracode static scan "$file" --policy-file policy DPW-Veracode-Recommended-SAST-SCA-V2 -teams DPW_Security.json
         fi
       done
