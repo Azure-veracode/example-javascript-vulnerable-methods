@@ -1,5 +1,5 @@
-# trigger:
-# - master
+trigger:
+- master
 
 schedules:
   - cron: "32 12 * * *"  # Runs daily at 12:00 PM UTC
@@ -21,3 +21,26 @@ steps:
     script: |
           export SRCCLR_API_TOKEN=$(SRCCLR)
           curl -sSL https://download.sourceclear.com/ci.sh | bash -s -- scan --recursive --update-advisor
+
+- task: CmdLine@2
+  name: "VeracodePackage"
+  inputs:
+    script: |
+      curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+      ./veracode package -das . --output ./verascan
+
+
+- task: CmdLine@2
+  name: "VeracodePipelineScan"
+  env:
+    VERACODE_API_KEY_ID: $(VERACODE_ID)
+    VERACODE_API_KEY_SECRET: $(VERACODE_SECRET)
+  inputs:
+    script: |
+      ./veracode policy get "policy DPW-Veracode-Recommended-SAST-SCA-V2 -teams DPW_Security" # can be removed if using a different fail criteria
+      for file in verascan/*; do
+        if [ -f "$file" ]; then
+          echo "Scanning $file ..."
+          ./veracode static scan "$file" --policy-file <name of the policy to use (replace any spaces with underscores)>.json
+        fi
+      done
